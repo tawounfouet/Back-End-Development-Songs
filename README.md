@@ -6,6 +6,14 @@ In this project we built a pictures service as a microservice in Flask.
 This microservice works with MongoDB database to store lyrics of the most popular songs of the band. We used   the PyMongo python module to interact with MongoDB programatically.
 
 
+##  Objectives
+In this project, we :
+- Setup a MongoDB database server
+- Create a Flask server
+- Write RESTful APIs on song resource
+- Test the APIs
+
+
 ## REST API Guidelines Review
 
 The REST API guidelines are as follows:
