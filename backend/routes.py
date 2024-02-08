@@ -55,3 +55,28 @@ def count():
     """Return length of data"""
     count = db.songs.count_documents({})
     return jsonify({"count": count}), 200
+
+@app.route("/song", methods=["GET"])
+def songs():
+    """Return all songs"""
+    songs = list(db.songs.find({}))
+
+    # Convert ObjectId to string for each document
+    for song in songs:
+        song['_id'] = str(song['_id'])
+
+    return jsonify({"songs": songs}), 200
+
+
+@app.route("/song/<int:id>", methods=["GET"])
+def get_song_by_id(id):
+    """Get a song by its id"""
+    song = db.songs.find_one({"id": id})
+    
+    if song:
+        # Convert ObjectId to string
+        song["_id"] = str(song["_id"])
+        return jsonify({"songs": [song]}), 200
+    else:
+        abort(404, {"message": f"Song with id {id} not found"})
+
