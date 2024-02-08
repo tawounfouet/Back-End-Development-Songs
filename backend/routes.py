@@ -2,7 +2,7 @@ from . import app
 import os
 import json
 import pymongo
-from flask import jsonify, request, make_response, abort, url_for  # noqa; F401
+from flask import jsonify, request, Response,  make_response, abort, url_for  # noqa; F401
 from pymongo import MongoClient
 from bson import json_util
 from pymongo.errors import OperationFailure
@@ -80,3 +80,26 @@ def get_song_by_id(id):
     else:
         abort(404, {"message": f"Song with id {id} not found"})
 
+
+@app.route("/song", methods=["POST"])
+def create_song():
+    """Create a new song"""
+    data = request.json
+    song_id = data.get("id")
+    
+    # Check if the song id already exists
+    existing_song = db.songs.find_one({"id": song_id})
+    if existing_song:
+        return jsonify({"Message": f"song with id {song_id} already present"}), 302
+    
+    # Insert the new song into the database
+    result = db.songs.insert_one(data)
+    
+    if result.inserted_id:
+        return Response(
+            response=json.dumps({"inserted id": str(result.inserted_id)}),
+            status=201,
+            mimetype="application/json"
+        )
+    else:
+        return jsonify({"message": "Failed to add song"}), 500
