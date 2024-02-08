@@ -103,3 +103,27 @@ def create_song():
         )
     else:
         return jsonify({"message": "Failed to add song"}), 500
+    
+
+@app.route("/song/<int:id>", methods=["PUT"])
+def update_song(id):
+    """Update an existing song"""
+    # get data from the json body
+    song_in = request.json
+
+    # check if the song exists
+    song = db.songs.find_one({"id": id})
+
+    # if song does not exist, return 404
+    if song == None:
+        return {"message": "song not found"}, 404
+
+    updated_data = {"$set": song_in}
+
+    result = db.songs.update_one({"id": id}, updated_data)
+
+    # if the song is found and updated, return the updated song
+    if result.modified_count == 0:
+        return {"message": "song found, but nothing updated"}, 200
+    else:
+        return parse_json(db.songs.find_one({"id": id})), 201
