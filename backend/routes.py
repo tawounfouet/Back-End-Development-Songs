@@ -56,6 +56,9 @@ def count():
     count = db.songs.count_documents({})
     return jsonify({"count": count}), 200
 
+
+# Define routes for the song service
+
 @app.route("/song", methods=["GET"])
 def songs():
     """Return all songs"""
@@ -66,6 +69,7 @@ def songs():
         song['_id'] = str(song['_id'])
 
     return jsonify({"songs": songs}), 200
+
 
 
 @app.route("/song/<int:id>", methods=["GET"])
@@ -79,6 +83,8 @@ def get_song_by_id(id):
         return jsonify({"songs": [song]}), 200
     else:
         abort(404, {"message": f"Song with id {id} not found"})
+
+
 
 
 @app.route("/song", methods=["POST"])
@@ -105,6 +111,7 @@ def create_song():
         return jsonify({"message": "Failed to add song"}), 500
     
 
+
 @app.route("/song/<int:id>", methods=["PUT"])
 def update_song(id):
     """Update an existing song"""
@@ -129,6 +136,7 @@ def update_song(id):
         return parse_json(db.songs.find_one({"id": id})), 201
     
 
+
 @app.route("/song/<int:id>", methods=["DELETE"])
 def delete_song(id):
     """Delete an existing song"""
@@ -143,3 +151,4 @@ def delete_song(id):
     else:
         # If deleted successfully, return 204 No Content
         return "", 204
+    
