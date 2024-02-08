@@ -2,8 +2,8 @@
 
 
 ## Project Overview
-In this project we built a pictures service as a microservice in Flask. In this lab, you are asked to continue working on the band website. 
-    This microservice works with MongoDB database to store lyrics of the most popular songs of the band. You will be using the PyMongo python module to interact with MongoDB programatically.
+In this project we built a pictures service as a microservice in Flask. 
+This microservice works with MongoDB database to store lyrics of the most popular songs of the band. We used   the PyMongo python module to interact with MongoDB programatically.
 
 
 ## REST API Guidelines Review
