@@ -10,6 +10,11 @@ python-dotenv==0.20.0
 Flask-Talisman
 Flask-CORS
 
+
+# MongoDB
+pymongo
+
+
 # Runtime dependencies
 gunicorn==20.1.0
 honcho==1.1.0
